@@ -1,5 +1,5 @@
 from aiogram import Router
-from aiogram.types import Message
+from aiogram.types import Message, CallbackQuery
 from lexicon.lexicon import LEXICON_RU
 
 
