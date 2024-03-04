@@ -29,9 +29,39 @@ async def info_cmd(callback: CallbackQuery):
 
 @user_router.callback_query(F.data == 'settings_btn')
 async def settings_cmd(callback: CallbackQuery):
-    markup = get_markup(1, 'backward')
+    markup = get_markup(2, 'capacity_btn', 'quantity_btn', 'backward')
     await callback.message.edit_text(text=LEXICON_RU['settings'], reply_markup=markup)
     logger.info(f"Пользователь {callback.from_user.id} в меню настроек")
+
+
+@user_router.callback_query(F.data == 'capacity_btn')
+async def capacity_choice(callback: CallbackQuery):
+    markup = get_markup(2, '1', '10', '100', '1000', '10000')
+    await callback.message.edit_text(text=LEXICON_RU['capacity'], reply_markup=markup)
+    logger.info(f'Пользователь {callback.from_user.id} выбирает разрядность чисел')
+
+
+@user_router.callback_query(F.data.in_(['1', '10', '100', '1000', '10000']))
+async def capacity_done(callback: CallbackQuery):
+    markup = get_markup(2, 'capacity_btn', 'quantity_btn', 'backward')
+    await callback.message.edit_text(text=LEXICON_RU['settings'], reply_markup=markup)
+    logger.info(f"Пользователь {callback.from_user.id} выбрал разрядность и находится в меню настроек")
+
+
+@user_router.callback_query(F.data == 'quantity_btn')
+async def quantity_choice(callback: CallbackQuery):
+    q = map(str, range(2, 19))
+    print(q)
+    markup = get_markup(3, *q)
+    await callback.message.edit_text(text=LEXICON_RU['quantity'], reply_markup=markup)
+    logger.info(f'Пользователь {callback.from_user.id} выбирает кол-во действий')
+
+
+@user_router.callback_query(F.data.in_(map(str, range(2, 19))))
+async def quantity_done(callback: CallbackQuery):
+    markup = get_markup(2, 'capacity_btn', 'quantity_btn', 'backward')
+    await callback.message.edit_text(text=LEXICON_RU['settings'], reply_markup=markup)
+    logger.info(f"Пользователь {callback.from_user.id} выбрал кол-во действий и находится в меню настроек")
 
 
 @user_router.callback_query(F.data == "start_btn")
