@@ -36,12 +36,12 @@ async def settings_cmd(callback: CallbackQuery):
 
 @user_router.callback_query(F.data == 'capacity_btn')
 async def capacity_choice(callback: CallbackQuery):
-    markup = get_markup(2, '1', '10', '100', '1000', '10000')
+    markup = get_markup(2, cap_1='1', cap_2='10', cap_3='100', cap_4='1000', cap_5='10000')
     await callback.message.edit_text(text=LEXICON_RU['capacity'], reply_markup=markup)
     logger.info(f'Пользователь {callback.from_user.id} выбирает разрядность чисел')
 
 
-@user_router.callback_query(F.data.in_(['1', '10', '100', '1000', '10000']))
+@user_router.callback_query(F.data.in_(['cap_1', 'cap_2', 'cap_3', 'cap_4', 'cap_5']))
 async def capacity_done(callback: CallbackQuery):
     markup = get_markup(2, 'capacity_btn', 'quantity_btn', 'backward')
     await callback.message.edit_text(text=LEXICON_RU['settings'], reply_markup=markup)
