@@ -3,6 +3,11 @@ from environs import Env
 
 
 @dataclass
+class DataBase:
+    sql_url: str
+
+
+@dataclass
 class TgBot:
     token: str
 
@@ -10,6 +15,7 @@ class TgBot:
 @dataclass
 class Config:
     tg_bot: TgBot
+    db: DataBase
 
 
 def create_config(path: str | None) -> Config:
@@ -19,5 +25,20 @@ def create_config(path: str | None) -> Config:
     return Config(
         tg_bot=TgBot(
             token=env('BOT_TOKEN')
+        ),
+        db=DataBase(
+            sql_url=env('SQLALCHEMY_URL')
         )
     )
+
+
+
+# def create_db_config(path: str | None) -> Config:
+#     env: Env = Env()
+#     env.read_env(path)
+
+#     return Config(
+#         db=DataBase(
+#             sql_url=env('SQLALCHEMY_URL')
+#         )
+#     )

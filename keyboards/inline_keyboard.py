@@ -16,6 +16,7 @@ def get_markup(width, *args, **kwargs):
 
     if kwargs:
         for button, text in kwargs.items():
+            print(f'!!!!!!!!!!!!!!!!   {button} - {text}')
             buttons.append(InlineKeyboardButton(
                 text=text,
                 callback_data=button
