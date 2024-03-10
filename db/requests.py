@@ -21,13 +21,14 @@ async def orm_add_user(
         tg_id: int,
         name: str | None = None,
         capacity: int = 1,
-        quantity: int = 2
+        quantity: int = 2,
+        speed: int = 1
 ):
     query = select(User).where(User.tg_id == tg_id)
     result = await session.execute(query)
     if result.first() is None:
         session.add(
-            User(tg_id=tg_id, name=name, capacity=capacity, quantity=quantity)
+            User(tg_id=tg_id, name=name, capacity=capacity, quantity=quantity, speed=speed)
         )
         await session.commit()
 
@@ -36,10 +37,9 @@ async def orm_get_values(
         session: AsyncSession,
         tg_id: int
 ):
-    query = select(User.capacity, User.quantity).where(User.tg_id == tg_id)
+    query = select(User.capacity, User.quantity, User.speed).where(User.tg_id == tg_id)
     result = await session.execute(query)
 
-    print("!!!!!!!!!!!!!", result)
     return result.all()
 
 
@@ -79,3 +79,22 @@ async def orm_update_quantity(
     query = (update(User).where(User.tg_id == tg_id).values(quantity=new_quantity))
     await session.execute(query)
     await session.commit()
+
+
+async def orm_update_speed(
+        session: AsyncSession,
+        tg_id: int,
+        new_speed: float
+):
+    query = (update(User).where(User.tg_id == tg_id).values(speed=new_speed))
+    await session.execute(query)
+    await session.commit()
+
+
+async def orm_get_date_created(
+        session: AsyncSession,
+        tg_id: int
+):
+    query = select(User.created).where(User.tg_id == tg_id)
+    result = await session.execute(query)
+    return result.scalar()

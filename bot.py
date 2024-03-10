@@ -3,10 +3,13 @@ import logging
 import handlers
 
 from aiogram import Bot, Dispatcher
+from aiogram.fsm.storage.memory import MemoryStorage
 from config_data.config import create_config, Config
 from db.requests import async_main, async_session
 from middlewares.db import DataBaseSession
 
+
+storage = MemoryStorage()
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +25,7 @@ async def main():
     config: Config = create_config(".env")
 
     bot = Bot(token=config.tg_bot.token, parse_mode='HTML')
-    dp = Dispatcher()
+    dp = Dispatcher(storage=storage)
 
     dp.include_router(handlers.user_router)
     dp.include_router(handlers.other_router)
