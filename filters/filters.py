@@ -1,4 +1,4 @@
-from aiogram.types import Message, CallbackQuery, TelegramObject
+from aiogram.types import Message, CallbackQuery
 from aiogram.filters import BaseFilter
 from aiogram.fsm.context import FSMContext
 from services.services import edit_call

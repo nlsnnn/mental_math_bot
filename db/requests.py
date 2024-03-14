@@ -1,4 +1,3 @@
-from os import getenv
 from sqlalchemy import select, update, func
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from db.models import User, Base
@@ -116,5 +115,4 @@ async def orm_get_id_users(
 ):
     query = select(User.tg_id)
     result = await session.execute(query)
-    # print(result.all())
     return result.all()

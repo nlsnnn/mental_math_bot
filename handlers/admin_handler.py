@@ -1,10 +1,12 @@
 import logging
 import asyncio
-from aiogram import Bot, Router, F
+
+from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
 from sqlalchemy.ext.asyncio import AsyncSession
+
 from lexicon.lexicon import LEXICON_RU
 from filters.filters import IsAdmin
 from keyboards.inline_keyboard import get_markup
@@ -50,7 +52,6 @@ async def mailing_start(message: Message, state: FSMContext, session: AsyncSessi
     for user in users:
         try:
             await message.bot.send_message(user, message.text)
-            # await bot.send_message(user, message.text[message.text.find(' '):])
             receive_users += 1
         except:
             block_users += 1
