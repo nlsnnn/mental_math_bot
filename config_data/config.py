@@ -10,6 +10,7 @@ class DataBase:
 @dataclass
 class TgBot:
     token: str
+    admin_id: int
 
 
 @dataclass
@@ -24,7 +25,8 @@ def create_config(path: str | None) -> Config:
 
     return Config(
         tg_bot=TgBot(
-            token=env('BOT_TOKEN')
+            token=env('BOT_TOKEN'),
+            admin_id=env('ADMIN_ID')
         ),
         db=DataBase(
             sql_url=env('SQLALCHEMY_URL')

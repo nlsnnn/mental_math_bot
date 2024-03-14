@@ -7,3 +7,7 @@ class FSMSettings(StatesGroup):
 
 class FSMArithmetic(StatesGroup):
     fill_answer = State()
+
+
+class FSMMailing(StatesGroup):
+    fill_text = State()

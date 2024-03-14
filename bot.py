@@ -27,7 +27,10 @@ async def main():
     bot = Bot(token=config.tg_bot.token, parse_mode='HTML')
     dp = Dispatcher(storage=storage)
 
+    dp['admin_id'] = config.tg_bot.admin_id
+
     dp.include_router(handlers.user_router)
+    dp.include_router(handlers.admin_router)
     dp.include_router(handlers.other_router)
 
     dp.update.middleware(DataBaseSession(session_pool=async_session))

@@ -1,5 +1,5 @@
 from os import getenv
-from sqlalchemy import select, update
+from sqlalchemy import select, update, func
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from db.models import User, Base
 from config_data.config import Config, create_config
@@ -98,3 +98,23 @@ async def orm_get_date_created(
     query = select(User.created).where(User.tg_id == tg_id)
     result = await session.execute(query)
     return result.scalar()
+
+
+# admin requests
+
+
+async def orm_get_number_users(
+        session: AsyncSession
+):
+    query = func.count(User.id)
+    result = await session.execute(query)
+    return result.scalar()
+
+
+async def orm_get_id_users(
+        session: AsyncSession
+):
+    query = select(User.tg_id)
+    result = await session.execute(query)
+    # print(result.all())
+    return result.all()

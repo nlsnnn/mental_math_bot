@@ -1,4 +1,4 @@
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import Message, CallbackQuery, TelegramObject
 from aiogram.filters import BaseFilter
 from aiogram.fsm.context import FSMContext
 from services.services import edit_call
@@ -27,3 +27,8 @@ class QuantityFilter(BaseFilter):
     async def __call__(self, callback: CallbackQuery):
         values = list(map(edit_call, range(2, 19)))
         return callback.data in values
+
+
+class IsAdmin(BaseFilter):
+    async def __call__(self, message: Message, admin_id: str):
+        return int(admin_id) == message.from_user.id

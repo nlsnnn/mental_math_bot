@@ -1,6 +1,6 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from lexicon.lexicon import LEXICON_RU
+from lexicon.lexicon import LEXICON_RU, LEXICON_RU
 
 
 def get_markup(width, *args, **kwargs):

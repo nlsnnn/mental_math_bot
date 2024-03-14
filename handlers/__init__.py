@@ -1,2 +1,3 @@
 from handlers.user_handler import user_router
+from handlers.admin_handler import admin_router
 from handlers.other_handlers import other_router
